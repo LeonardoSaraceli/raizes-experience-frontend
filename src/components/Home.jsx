@@ -585,10 +585,6 @@ export default function Home({ token }) {
                                 <p>
                                   <strong>Quantidade:</strong> {order.quantity}
                                 </p>
-                                <p>
-                                  <strong>IDs de Reserva:</strong>{' '}
-                                  {order.bookingIds?.join(', ') || 'Nenhum'}
-                                </p>
                               </div>
                             </li>
                           ))}
