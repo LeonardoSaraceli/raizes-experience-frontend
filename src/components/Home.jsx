@@ -53,7 +53,6 @@ export default function Home({ token }) {
   const [bookings, setBookings] = useState([])
   const [showViewModal, setShowViewModal] = useState(false)
 
-  // Novos estados para gerenciar a visualização de pedidos
   const [bookingDetails, setBookingDetails] = useState(null)
   const [bookingOrders, setBookingOrders] = useState([])
   const [loadingOrders, setLoadingOrders] = useState(false)
@@ -238,12 +237,10 @@ export default function Home({ token }) {
     }
   }
 
-  // Nova função para buscar os pedidos de um booking específico
   const fetchBookingOrders = (booking) => {
     setLoadingOrders(true)
     setBookingDetails(booking)
 
-    // Extrair o ID do produto da URL
     const productId = booking.shopify_product_id.split('/').pop()
 
     fetch(
@@ -279,7 +276,6 @@ export default function Home({ token }) {
       })
   }
 
-  // Função para voltar à lista de bookings
   const handleBackToBookings = () => {
     setBookingDetails(null)
     setBookingOrders([])
@@ -575,10 +571,10 @@ export default function Home({ token }) {
                               </div>
 
                               <div className="customer-info">
-                                {order.customer?.displayName && (
+                                {order.customer?.name && (
                                   <p>
                                     <strong>Cliente:</strong>{' '}
-                                    {order.customer.displayName}
+                                    {order.customer.name}
                                   </p>
                                 )}
                                 {order.customer?.email && (
@@ -608,12 +604,15 @@ export default function Home({ token }) {
                               <div className="order-details">
                                 <p>
                                   <strong>Total:</strong>{' '}
-                                  {order.totalPrice.amount}{' '}
-                                  {order.totalPrice.currencyCode}
+                                  {order.totalPrice?.amount}{' '}
+                                  {order.totalPrice?.currencyCode}
                                 </p>
                                 <p>
-                                  <strong>Quantidade:</strong>{' '}
-                                  {order.quantity || 1}
+                                  <strong>Quantidade:</strong> {order.quantity}
+                                </p>
+                                <p>
+                                  <strong>IDs de Reserva:</strong>{' '}
+                                  {order.bookingIds?.join(', ') || 'Nenhum'}
                                 </p>
                               </div>
                             </li>
