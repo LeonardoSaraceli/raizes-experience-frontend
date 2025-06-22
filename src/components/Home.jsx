@@ -217,7 +217,10 @@ export default function Home({ token }) {
     if (window.confirm('Tem certeza que deseja excluir este agendamento?')) {
       fetch(`${import.meta.env.VITE_BACKEND_URL}/booking/${bookingId}`, {
         method: 'DELETE',
-        authorization: `Bearer ${token}`,
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Bearer ${token}`,
+        },
       })
         .then((res) => {
           if (res.status === 403) {
@@ -449,7 +452,8 @@ export default function Home({ token }) {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      shopify_product_title: e.target.options[e.target.selectedIndex].text,
+                      shopify_product_title:
+                        e.target.options[e.target.selectedIndex].text,
                       shopify_product_id: e.target.value,
                     })
                   }
@@ -529,7 +533,10 @@ export default function Home({ token }) {
                 ) : (
                   <>
                     <div className="booking-summary">
-                      <h3>{bookingDetails.shopify_product_title || 'Produto sem nome'}</h3>
+                      <h3>
+                        {bookingDetails.shopify_product_title ||
+                          'Produto sem nome'}
+                      </h3>
                       <p>
                         <strong>Horário:</strong>{' '}
                         {new Date(
@@ -654,7 +661,8 @@ export default function Home({ token }) {
                             </div>
                             <div className="booking-details">
                               <div className="booking-title">
-                                {booking.shopify_product_title || 'Produto sem nome'}
+                                {booking.shopify_product_title ||
+                                  'Produto sem nome'}
                               </div>
                               <div className="booking-duration">
                                 {formatDuration(booking.duration)}
