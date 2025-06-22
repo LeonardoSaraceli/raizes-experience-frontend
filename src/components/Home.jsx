@@ -6,8 +6,6 @@ import {
   FaEye,
   FaXmark,
   FaTrash,
-  FaPhone,
-  FaEnvelope,
   FaArrowLeft,
 } from 'react-icons/fa6'
 import '../assets/styles/home.css'
@@ -568,37 +566,6 @@ export default function Home({ token }) {
                                     order.createdAt
                                   ).toLocaleDateString()}
                                 </span>
-                              </div>
-
-                              <div className="customer-info">
-                                {order.customer?.name && (
-                                  <p>
-                                    <strong>Cliente:</strong>{' '}
-                                    {order.customer.name}
-                                  </p>
-                                )}
-                                {order.customer?.email && (
-                                  <p>
-                                    <strong>Email:</strong>{' '}
-                                    <a
-                                      href={`mailto:${order.customer.email}`}
-                                      className="contact-link"
-                                    >
-                                      {order.customer.email} <FaEnvelope />
-                                    </a>
-                                  </p>
-                                )}
-                                {order.customer?.phone && (
-                                  <p>
-                                    <strong>Telefone:</strong>{' '}
-                                    <a
-                                      href={`tel:${order.customer.phone}`}
-                                      className="contact-link"
-                                    >
-                                      {order.customer.phone} <FaPhone />
-                                    </a>
-                                  </p>
-                                )}
                               </div>
 
                               <div className="order-details">
