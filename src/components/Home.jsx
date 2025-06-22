@@ -346,7 +346,12 @@ export default function Home({ token }) {
               </div>
 
               {popupIndex === index && (
-                <div className="popup">
+                <div
+                  className="popup"
+                  style={{
+                    top: index <= 7 ? '0' : undefined,
+                  }}
+                >
                   {!isPastDay && (
                     <button onClick={handleCreate}>
                       <FaPlus /> Criar
