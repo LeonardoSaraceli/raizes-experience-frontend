@@ -561,6 +561,14 @@ export default function Home({ token }) {
                                 <span className="order-name">
                                   Pedido #{order.name}
                                 </span>
+                                <a
+                                  href={order.adminUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="view-order-link"
+                                >
+                                  Ver Pedido no Shopify
+                                </a>
                                 <span className="order-date">
                                   {new Date(
                                     order.createdAt

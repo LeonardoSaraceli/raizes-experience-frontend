@@ -698,6 +698,17 @@ form button[type='submit']:hover {
   margin: 0.5rem 0;
 }
 
+.view-order-link {
+  margin-left: 10px;
+  color: #5c6ac4;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+
+.view-order-link:hover {
+  text-decoration: underline;
+}
+
 .contact-link {
   display: inline-flex;
   align-items: center;
