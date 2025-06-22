@@ -43,7 +43,7 @@ export default function Home({ token }) {
 
   const [products, setProducts] = useState([])
   const [formData, setFormData] = useState({
-    title: '',
+    shopify_product_title: '',
     durationHours: '',
     durationMinutes: '',
     startTime: '',
@@ -182,7 +182,7 @@ export default function Home({ token }) {
         authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        title: formData.title,
+        shopify_product_title: formData.shopify_product_title,
         duration,
         start_datetime: fullDate.toISOString(),
         shopify_product_id: formData.shopify_product_id.split('/').pop(),
@@ -449,7 +449,7 @@ export default function Home({ token }) {
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      title: e.target.options[e.target.selectedIndex].text,
+                      shopify_product_title: e.target.options[e.target.selectedIndex].text,
                       shopify_product_id: e.target.value,
                     })
                   }
@@ -529,7 +529,7 @@ export default function Home({ token }) {
                 ) : (
                   <>
                     <div className="booking-summary">
-                      <h3>{bookingDetails.title || 'Produto sem nome'}</h3>
+                      <h3>{bookingDetails.shopify_product_title || 'Produto sem nome'}</h3>
                       <p>
                         <strong>Horário:</strong>{' '}
                         {new Date(
@@ -654,7 +654,7 @@ export default function Home({ token }) {
                             </div>
                             <div className="booking-details">
                               <div className="booking-title">
-                                {booking.title || 'Produto sem nome'}
+                                {booking.shopify_product_title || 'Produto sem nome'}
                               </div>
                               <div className="booking-duration">
                                 {formatDuration(booking.duration)}
