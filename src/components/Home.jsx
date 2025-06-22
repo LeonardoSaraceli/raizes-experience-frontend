@@ -559,7 +559,7 @@ export default function Home({ token }) {
                             <li key={order.id} className="order-item">
                               <div className="order-header">
                                 <span className="order-name">
-                                  Pedido #{order.name}
+                                  Pedido #{order.name.replace('#', '')}
                                 </span>
                                 <a
                                   href={order.adminUrl}
