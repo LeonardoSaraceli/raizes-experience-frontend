@@ -685,6 +685,37 @@ form button[type='submit']:hover {
   border-bottom: 1px solid #f0f0f0;
 }
 
+/* ESTILOS PARA FIXAÇÃO */
+.fixed-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.fixed-toggle:hover {
+  background: #e9ecef;
+}
+
+.fixed-toggle.active {
+  background-color: #e0f7fa;
+  border-color: #3b7d4f;
+}
+
+/* RESPONSIVIDADE */
+@media (max-width: 480px) {
+  .fixed-toggle {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+  }
+}
+
 .order-name {
   font-weight: 600;
 }

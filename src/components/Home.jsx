@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import {
   FaAngleLeft,
   FaAngleRight,
@@ -7,6 +7,7 @@ import {
   FaXmark,
   FaTrash,
   FaArrowLeft,
+  FaThumbtack,
 } from 'react-icons/fa6'
 import '../assets/styles/home.css'
 import { useNavigate } from 'react-router-dom'
@@ -35,6 +36,23 @@ export default function Home({ token }) {
     month: currentDate.getMonth(),
     day: null,
   })
+
+  const [isFixed, setIsFixed] = useState(false) // NOVO: estado de fixação
+  const [fixedDate, setFixedDate] = useState('') // NOVO: data final fixa
+
+  const maxFixedDate = useMemo(() => {
+    if (!formDate.day) return ''
+    const date = new Date(formDate.year, formDate.month, formDate.day)
+    date.setMonth(date.getMonth() + 6)
+    return date.toISOString().split('T')[0]
+  }, [formDate])
+
+  useEffect(() => {
+    if (!showModal) {
+      setIsFixed(false)
+      setFixedDate('')
+    }
+  }, [showModal])
 
   const [popupIndex, setPopupIndex] = useState(null)
   const [showModal, setShowModal] = useState(false)
@@ -172,6 +190,15 @@ export default function Home({ token }) {
     if (m) durationParts.push(`${m} minute${m > 1 ? 's' : ''}`)
     const duration = durationParts.join(' ')
 
+    let fixedDateISO = null
+
+    if (isFixed && fixedDate) {
+      const fixedDateObj = new Date(fixedDate)
+      fixedDateObj.setHours(parseInt(hours, 10))
+      fixedDateObj.setMinutes(parseInt(minutes, 10))
+      fixedDateISO = fixedDateObj.toISOString()
+    }
+
     fetch(`${import.meta.env.VITE_BACKEND_URL}/booking`, {
       method: 'POST',
       headers: {
@@ -183,6 +210,7 @@ export default function Home({ token }) {
         duration,
         start_datetime: fullDate.toISOString(),
         shopify_product_id: formData.shopify_product_id.split('/').pop(),
+        fixed_date: fixedDateISO,
       }),
     })
       .then((res) => {
@@ -234,6 +262,23 @@ export default function Home({ token }) {
         .catch(console.error)
     }
   }
+
+  const renderFixedDateInput = () => (
+    <div className="form-group">
+      <label>Fixar até: *</label>
+      <input
+        type="date"
+        value={fixedDate}
+        onChange={(e) => setFixedDate(e.target.value)}
+        min={`${formDate.year}-${String(formDate.month + 1).padStart(
+          2,
+          '0'
+        )}-${String(formDate.day).padStart(2, '0')}`}
+        max={maxFixedDate}
+        required
+      />
+    </div>
+  )
 
   const fetchBookingOrders = (booking) => {
     setLoadingOrders(true)
@@ -466,6 +511,18 @@ export default function Home({ token }) {
                   ))}
                 </select>
               </div>
+
+              <div className="form-group">
+                <button
+                  type="button"
+                  className={`fixed-toggle ${isFixed ? 'active' : ''}`}
+                  onClick={() => setIsFixed(!isFixed)}
+                >
+                  <FaThumbtack /> {isFixed ? 'Desfixar' : 'Fixar Booking'}
+                </button>
+              </div>
+
+              {isFixed && renderFixedDateInput()}
 
               <div className="form-buttons">
                 <button
