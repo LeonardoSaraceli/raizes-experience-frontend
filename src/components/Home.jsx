@@ -579,8 +579,8 @@ export default function Home({ token }) {
                               <div className="order-details">
                                 <p>
                                   <strong>Total:</strong>{' '}
-                                  {order.totalPrice?.amount}{' '}
-                                  {order.totalPrice?.currencyCode}
+                                  {order.totalPrice?.subtotal}{' '}
+                                  {order.totalPrice?.currency}
                                 </p>
                                 <p>
                                   <strong>Quantidade:</strong> {order.quantity}
