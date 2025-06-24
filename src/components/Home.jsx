@@ -37,22 +37,12 @@ export default function Home({ token }) {
     day: null,
   })
 
-  const [isFixed, setIsFixed] = useState(false) // NOVO: estado de fixação
-  const [fixedDate, setFixedDate] = useState('') // NOVO: data final fixa
-
   const maxFixedDate = useMemo(() => {
     if (!formDate.day) return ''
     const date = new Date(formDate.year, formDate.month, formDate.day)
     date.setMonth(date.getMonth() + 6)
     return date.toISOString().split('T')[0]
   }, [formDate])
-
-  useEffect(() => {
-    if (!showModal) {
-      setIsFixed(false)
-      setFixedDate('')
-    }
-  }, [showModal])
 
   const [popupIndex, setPopupIndex] = useState(null)
   const [showModal, setShowModal] = useState(false)
@@ -73,6 +63,18 @@ export default function Home({ token }) {
   const [bookingOrders, setBookingOrders] = useState([])
   const [loadingOrders, setLoadingOrders] = useState(false)
   const navigate = useNavigate()
+
+  // Estados de funcionalidade
+  const [isFixed, setIsFixed] = useState(false)
+  const [fixedDate, setFixedDate] = useState('')
+
+  // Agora showModal já está declarado
+  useEffect(() => {
+    if (!showModal) {
+      setIsFixed(false)
+      setFixedDate('')
+    }
+  }, [showModal])
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_BACKEND_URL}/product`, {
